@@ -8,11 +8,19 @@
 import XCTest
 @testable import Notas // Se añade para poder probar las clases "internal"
 
+@MainActor
 final class ViewModelTest: XCTestCase {
     var viewModel: ViewModel!
     
     override func setUpWithError() throws {
-        viewModel = ViewModel()
+        let dataBase = NotesDatabase.shared
+        dataBase.contairner = NotesDatabase.setupContainer(inMemory: true)
+        
+        let createNotesUseCase = CreateNoteUseCase(notesDataBase: dataBase)
+        let fetchAllNotesUseCase = FetchAllNotesUseCase(notesDataBase: dataBase)
+        
+        viewModel = ViewModel(createNoteUseCase: createNotesUseCase,
+                              fetchAllNotesUseCase: fetchAllNotesUseCase)
     }
     
     override func tearDownWithError() throws {
@@ -66,13 +74,13 @@ final class ViewModelTest: XCTestCase {
         let note = Note(title: "Original Title", text: "Original Text", createAt: .now)
         viewModel.notes.append(note)
         
-        guard let noteId = viewModel.notes.first?.id else {
+        guard let noteId = viewModel.notes.first?.identifier else {
             XCTFail("Note ID should not be nil")
             return
         }
         
         // When
-        viewModel.updateNoteWith(id: noteId, newTitle: "Updated Title", newText: "Updated Text")
+        viewModel.updateNoteWith(identifier: noteId, newTitle: "Updated Title", newText: "Updated Text")
         
         // Then
         XCTAssertEqual(viewModel.notes.first?.title, "Updated Title")
@@ -84,13 +92,14 @@ final class ViewModelTest: XCTestCase {
         let note = Note(title: "Title to Remove", text: "Text to Remove", createAt: .now)
         viewModel.notes.append(note)
         
-        guard let noteId = viewModel.notes.first?.id else {
+        guard let noteId = viewModel.notes.first?.identifier else {
             XCTFail("Note ID should not be nil")
             return
         }
         // When
-        viewModel.removeNoteWith(id: noteId)
+        viewModel.removeNoteWith(identifier: noteId)
         // Then
         XCTAssertTrue(viewModel.notes.isEmpty)
     }
+    
 }

@@ -12,23 +12,44 @@ import Observation
 class ViewModel {
     var notes: [Note]
     
-    init(notes: [Note] = []) {
+    var createNoteUseCase: CreateNoteUseCase
+    var fetchAllUseCase: FetchAllNotesUseCase
+    
+    init(notes: [Note] = [],
+         createNoteUseCase: CreateNoteUseCase = CreateNoteUseCase(),
+         fetchAllNotesUseCase: FetchAllNotesUseCase = FetchAllNotesUseCase()) {
         self.notes = notes
+        self.createNoteUseCase = createNoteUseCase
+        self.fetchAllUseCase = fetchAllNotesUseCase
+        fetchAllNotes()
     }
     
     func createNoteWith(title: String, text: String) {
-        let note : Note = .init(title: title, text: text, createAt: .now)
-        notes.append(note)
+        do {
+            try createNoteUseCase.createNoteWith(title: title, text: text)
+            fetchAllNotes()
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
     }
     
-    func updateNoteWith(id: UUID, newTitle: String, newText: String?) {
-        if let index = notes.firstIndex(where: {$0.id == id}) {
-            let updateNote = Note(id: id, title: newTitle, text: newText, createAt: notes[index].createAt)
+    func fetchAllNotes() {
+        do {
+            notes = try fetchAllUseCase.fetchAll()
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
+    
+    }
+    
+    func updateNoteWith(identifier: UUID, newTitle: String, newText: String?) {
+        if let index = notes.firstIndex(where: {$0.identifier == identifier}) {
+            let updateNote = Note(identifier: identifier, title: newTitle, text: newText, createAt: notes[index].createAt)
             notes[index] = updateNote
         }
     }
     
-    func removeNoteWith(id: UUID) {
-        notes.removeAll(where: {$0.id == id})
+    func removeNoteWith(identifier: UUID) {
+        notes.removeAll(where: {$0.identifier == identifier})
     }
 }
