@@ -21,6 +21,12 @@
 		6FE3DAA82BFCDF6D0011776A /* CreateNoteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3DAA72BFCDF6D0011776A /* CreateNoteUseCase.swift */; };
 		6FE3DAAA2BFCE0010011776A /* FetchAllNotesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3DAA92BFCE0010011776A /* FetchAllNotesUseCase.swift */; };
 		6FE3DAAC2BFCE77A0011776A /* ViewModelIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3DAAB2BFCE77A0011776A /* ViewModelIntegrationTest.swift */; };
+		6FE3DAAF2BFD2E810011776A /* UpdateNoteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3DAAE2BFD2E810011776A /* UpdateNoteUseCase.swift */; };
+		6FE3DAB12BFD2E9B0011776A /* RemoveNoteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE3DAB02BFD2E9B0011776A /* RemoveNoteUseCase.swift */; };
+		6FE665842BFF173D004260F7 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6FE665832BFF173D004260F7 /* InlineSnapshotTesting */; };
+		6FE665862BFF173D004260F7 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 6FE665852BFF173D004260F7 /* SnapshotTesting */; };
+		6FE813BD2BFE2D4500B84350 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE813BC2BFE2D4500B84350 /* Mocks.swift */; };
+		6FE813C02BFF138600B84350 /* CreateNoteViewSnapshotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE813BF2BFF138600B84350 /* CreateNoteViewSnapshotTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +56,10 @@
 		6FE3DAA72BFCDF6D0011776A /* CreateNoteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNoteUseCase.swift; sourceTree = "<group>"; };
 		6FE3DAA92BFCE0010011776A /* FetchAllNotesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAllNotesUseCase.swift; sourceTree = "<group>"; };
 		6FE3DAAB2BFCE77A0011776A /* ViewModelIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelIntegrationTest.swift; sourceTree = "<group>"; };
+		6FE3DAAE2BFD2E810011776A /* UpdateNoteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNoteUseCase.swift; sourceTree = "<group>"; };
+		6FE3DAB02BFD2E9B0011776A /* RemoveNoteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNoteUseCase.swift; sourceTree = "<group>"; };
+		6FE813BC2BFE2D4500B84350 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		6FE813BF2BFF138600B84350 /* CreateNoteViewSnapshotTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNoteViewSnapshotTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FE665842BFF173D004260F7 /* InlineSnapshotTesting in Frameworks */,
+				6FE665862BFF173D004260F7 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,8 +105,7 @@
 			children = (
 				6FE3DA7C2BFCADC90011776A /* NotasApp.swift */,
 				6FE3DAA52BFCDB670011776A /* NotesDatabase.swift */,
-				6FE3DAA72BFCDF6D0011776A /* CreateNoteUseCase.swift */,
-				6FE3DAA92BFCE0010011776A /* FetchAllNotesUseCase.swift */,
+				6FE3DAAD2BFD2E500011776A /* UseCases */,
 				6FE3DA952BFCB9950011776A /* Views */,
 				6FE3DA8E2BFCAEE10011776A /* Model */,
 				6FE3DA822BFCADCB0011776A /* Assets.xcassets */,
@@ -133,11 +144,56 @@
 		6FE3DA9B2BFCBA9B0011776A /* NotasTests */ = {
 			isa = PBXGroup;
 			children = (
+				6FE813C32BFF13C500B84350 /* SnapshotTests */,
+				6FE813C22BFF13AC00B84350 /* IntegrationTests */,
+				6FE813C12BFF139D00B84350 /* UnitTests */,
 				6FE3DA9C2BFCBA9B0011776A /* NoteTests.swift */,
-				6FE3DAA32BFCBFB90011776A /* ViewModelTest.swift */,
-				6FE3DAAB2BFCE77A0011776A /* ViewModelIntegrationTest.swift */,
+				6FE813BB2BFE2D2200B84350 /* Mocks */,
 			);
 			path = NotasTests;
+			sourceTree = "<group>";
+		};
+		6FE3DAAD2BFD2E500011776A /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				6FE3DAA72BFCDF6D0011776A /* CreateNoteUseCase.swift */,
+				6FE3DAA92BFCE0010011776A /* FetchAllNotesUseCase.swift */,
+				6FE3DAAE2BFD2E810011776A /* UpdateNoteUseCase.swift */,
+				6FE3DAB02BFD2E9B0011776A /* RemoveNoteUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		6FE813BB2BFE2D2200B84350 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				6FE813BC2BFE2D4500B84350 /* Mocks.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		6FE813C12BFF139D00B84350 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				6FE3DAA32BFCBFB90011776A /* ViewModelTest.swift */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		6FE813C22BFF13AC00B84350 /* IntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+				6FE3DAAB2BFCE77A0011776A /* ViewModelIntegrationTest.swift */,
+			);
+			path = IntegrationTests;
+			sourceTree = "<group>";
+		};
+		6FE813C32BFF13C500B84350 /* SnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				6FE813BF2BFF138600B84350 /* CreateNoteViewSnapshotTest.swift */,
+			);
+			path = SnapshotTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +230,10 @@
 				6FE3DA9F2BFCBA9B0011776A /* PBXTargetDependency */,
 			);
 			name = NotasTests;
+			packageProductDependencies = (
+				6FE665832BFF173D004260F7 /* InlineSnapshotTesting */,
+				6FE665852BFF173D004260F7 /* SnapshotTesting */,
+			);
 			productName = NotasTests;
 			productReference = 6FE3DA9A2BFCBA9B0011776A /* NotasTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -206,6 +266,9 @@
 				Base,
 			);
 			mainGroup = 6FE3DA702BFCADC90011776A;
+			packageReferences = (
+				6FE813BE2BFF135800B84350 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			productRefGroup = 6FE3DA7A2BFCADC90011776A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -242,11 +305,13 @@
 			files = (
 				6FE3DA902BFCAF070011776A /* ViewModel.swift in Sources */,
 				6FE3DAA62BFCDB670011776A /* NotesDatabase.swift in Sources */,
+				6FE3DAAF2BFD2E810011776A /* UpdateNoteUseCase.swift in Sources */,
 				6FE3DA7F2BFCADC90011776A /* ContentView.swift in Sources */,
 				6FE3DA7D2BFCADC90011776A /* NotasApp.swift in Sources */,
 				6FE3DA942BFCB5A30011776A /* UpdateNoteView.swift in Sources */,
 				6FE3DAA82BFCDF6D0011776A /* CreateNoteUseCase.swift in Sources */,
 				6FE3DAAA2BFCE0010011776A /* FetchAllNotesUseCase.swift in Sources */,
+				6FE3DAB12BFD2E9B0011776A /* RemoveNoteUseCase.swift in Sources */,
 				6FE3DA922BFCB2520011776A /* CreateNoteView.swift in Sources */,
 				6FE3DA8D2BFCAE360011776A /* Note.swift in Sources */,
 			);
@@ -256,9 +321,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FE813C02BFF138600B84350 /* CreateNoteViewSnapshotTest.swift in Sources */,
 				6FE3DAA42BFCBFB90011776A /* ViewModelTest.swift in Sources */,
 				6FE3DA9D2BFCBA9B0011776A /* NoteTests.swift in Sources */,
 				6FE3DAAC2BFCE77A0011776A /* ViewModelIntegrationTest.swift in Sources */,
+				6FE813BD2BFE2D4500B84350 /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +584,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6FE813BE2BFF135800B84350 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.16.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6FE665832BFF173D004260F7 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6FE813BE2BFF135800B84350 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		6FE665852BFF173D004260F7 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6FE813BE2BFF135800B84350 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6FE3DA712BFCADC90011776A /* Project object */;
 }

@@ -13,19 +13,14 @@ final class ViewModelTest: XCTestCase {
     var viewModel: ViewModel!
     
     override func setUpWithError() throws {
-        let dataBase = NotesDatabase.shared
-        dataBase.contairner = NotesDatabase.setupContainer(inMemory: true)
-        
-        let createNotesUseCase = CreateNoteUseCase(notesDataBase: dataBase)
-        let fetchAllNotesUseCase = FetchAllNotesUseCase(notesDataBase: dataBase)
-        
-        viewModel = ViewModel(createNoteUseCase: createNotesUseCase,
-                              fetchAllNotesUseCase: fetchAllNotesUseCase)
+        viewModel = ViewModel(createNoteUseCase: CreateNoteUseCaseMock(),
+                              fetchAllNotesUseCase: FetchAllNotesUseCaseMock(),
+                              updateNoteUseCase: UpdateNotesUseCaseMock(),
+                              removeNoteUseCase: RemoveNoteUseCaseMock())
     }
     
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        
+       mockDatabase = []
     }
     
     func testCreateNote() {
@@ -71,8 +66,9 @@ final class ViewModelTest: XCTestCase {
     
     func testUpdateNoteWith() {
         // Given
-        let note = Note(title: "Original Title", text: "Original Text", createAt: .now)
-        viewModel.notes.append(note)
+        let title = "Original Title"
+        let text = "Original Text"
+        viewModel.createNoteWith(title: title, text: text)
         
         guard let noteId = viewModel.notes.first?.identifier else {
             XCTFail("Note ID should not be nil")
@@ -89,15 +85,18 @@ final class ViewModelTest: XCTestCase {
     
     func testRemoveNoteWith() {
         // Given
-        let note = Note(title: "Title to Remove", text: "Text to Remove", createAt: .now)
-        viewModel.notes.append(note)
+        let title = "Original Title"
+        let text = "Original Text"
+        viewModel.createNoteWith(title: title, text: text)
         
         guard let noteId = viewModel.notes.first?.identifier else {
             XCTFail("Note ID should not be nil")
             return
         }
+        
         // When
         viewModel.removeNoteWith(identifier: noteId)
+        
         // Then
         XCTAssertTrue(viewModel.notes.isEmpty)
     }

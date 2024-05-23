@@ -11,16 +11,24 @@ import Observation
 @Observable
 class ViewModel {
     var notes: [Note]
+    var databaseError: DataBaseError?
     
-    var createNoteUseCase: CreateNoteUseCase
-    var fetchAllUseCase: FetchAllNotesUseCase
+    var createNoteUseCase: CreateNoteProtocol
+    var fetchAllUseCase: FetchAllNotesProtocol
+    var updateNoteUseCase: UpdateNoteProtocol
+    var removeNoteUseCase: RemoveNoteProtocol
+    
     
     init(notes: [Note] = [],
-         createNoteUseCase: CreateNoteUseCase = CreateNoteUseCase(),
-         fetchAllNotesUseCase: FetchAllNotesUseCase = FetchAllNotesUseCase()) {
+         createNoteUseCase: CreateNoteProtocol = CreateNoteUseCase(),
+         fetchAllNotesUseCase: FetchAllNotesProtocol = FetchAllNotesUseCase(),
+         updateNoteUseCase: UpdateNoteProtocol = UpdateNoteUseCase(),
+         removeNoteUseCase: RemoveNoteProtocol = RemoveNoteUseCase()) {
         self.notes = notes
         self.createNoteUseCase = createNoteUseCase
         self.fetchAllUseCase = fetchAllNotesUseCase
+        self.updateNoteUseCase = updateNoteUseCase
+        self.removeNoteUseCase = removeNoteUseCase
         fetchAllNotes()
     }
     
@@ -43,13 +51,22 @@ class ViewModel {
     }
     
     func updateNoteWith(identifier: UUID, newTitle: String, newText: String?) {
-        if let index = notes.firstIndex(where: {$0.identifier == identifier}) {
-            let updateNote = Note(identifier: identifier, title: newTitle, text: newText, createAt: notes[index].createAt)
-            notes[index] = updateNote
+        do {
+            try updateNoteUseCase.updateNoteWith(identifier: identifier, title: newTitle, text: newText)
+        } catch {
+            print("Error \(error.localizedDescription)")
         }
     }
     
     func removeNoteWith(identifier: UUID) {
-        notes.removeAll(where: {$0.identifier == identifier})
+        do {
+            try removeNoteUseCase.removeNoteWith(identifier: identifier)
+            fetchAllNotes()
+        } catch let error as DataBaseError {
+            print("Error \(error.localizedDescription)")
+            databaseError = error
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
     }
 }
