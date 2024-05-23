@@ -56,8 +56,8 @@ struct ContentView: View {
 
 #Preview {
     ContentView(viewModel: .init(notes: [
-        .init(title: "SwiftBeta", text: "Texto 1", createAt: .now),
-        .init(title: "SwiftBeta2", text: "Texto 2", createAt: .now),
+        .init(title: "Nota 1", text: "Texto 1", createAt: .now),
+        .init(title: "Nota 2", text: "Texto 2", createAt: .now),
     ]))
 }
     

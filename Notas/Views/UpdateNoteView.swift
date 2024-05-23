@@ -32,6 +32,7 @@ struct UpdateNoteView: View {
                 Text("Eliminar Nota")
                     .foregroundStyle(.gray)
                     .underline()
+                    .accessibilityIdentifier("remove_button_identifier")
             }
             .buttonStyle(BorderlessButtonStyle())
             Spacer()
